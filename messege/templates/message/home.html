@@ -33,6 +33,7 @@
        }
        input,textarea{
         color: black;
+        width: 200px;
        }
        .post-btn{
         color: black;
@@ -41,6 +42,13 @@
         border-radius: 10px;
         border: none;
         cursor: pointer;
+       }
+       .all-message{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        padding: 50px;
        }
        .box-message{
         height: 150px;
@@ -51,6 +59,8 @@
         flex-direction: column;
         padding: 10px;
         margin:10px;
+        border : 1.5px solid #490d61;
+        border-radius: 10px;
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
        }
        .edit-btn,.delete-btn{
@@ -78,8 +88,8 @@
         </div>
         <br>
         <h2>All Messages</h2>
-
-        {% for m in messages %}
+        <div class="all-message">
+        {% for m in messages %}      
             <div class="box-message">
                 <h3>{{ m.name }}</h3>
                 <small> {{ m.created_at }} </small>
@@ -88,16 +98,16 @@
                 <form method="post">
                     {% csrf_token %}
                     <!-- edit button -->
-                    <input type="hidden" name="edit-id" value="{{edit.id}}">
+                    <input type="hidden" name="edit-id" value="{{m.id}}">
                     <button class="edit-btn" type="submit">Edit</button>
 
                     <!-- delete button -->
-                    <input type="hidden" name="delete-id" value="{{dlt.id}}">
+                    <input type="hidden" name="delete-id" value="{{m.id}}">
                     <button class="delete-btn" type="submit">Delete</button>
                 </form>
-            </div>
+            </div>           
         {% endfor %}
-        
+        </div>
     </body>
 
 
