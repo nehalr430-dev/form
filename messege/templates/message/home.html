@@ -3,19 +3,72 @@
     <head>
         <title>Messages</title>
     </head>
-
+    <style>
+        *{
+          padding: 0;
+          margin: 0;
+          color: white;
+        }
+        body{
+             background: linear-gradient(45deg, #010758,#490d61);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             flex-direction: column;
+        }
+       h1{
+        margin: 20px;
+       }
+       .box{
+        margin: 20px;
+        width: 100%;
+        min-width: 200px;      
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+       }
+       h1,input,textarea,.post-btn{
+        margin-top: 10px;
+       }
+       .post-btn{
+        color: black;
+        height: 30px;
+        width: 100px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+       }
+       .box-message{
+        height: 150px;
+        width: 200px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        margin:10px;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+       }
+       .edit-btn,.delete-btn{
+        width: 50px;
+        color: black;
+        border-radius: 10px;
+        cursor: pointer;
+       }
+    </style>
     <body>
         <h1>All Messages</h1>
 
         <div class="box">
             <h2>Add your new message</h2>
 
-            <form method="POST">
+            <form  method="POST">
 
                 {% csrf_token %} 
-                <input type="text" name="name" placeholder="Your Name" required>
-                <textarea name="text" placeholder="Write Your Message" required></textarea>
-                <button class="post-btn" type="submit">Post Message</button>
+                <input type="text" name="name" placeholder="Your Name" required><br>
+                <textarea name="text" placeholder="Write Your Message" required></textarea><br>
+                <button class="post-btn" type="submit">Post Message</button><br>
 
             </form>
 
@@ -24,10 +77,21 @@
         <h2>All Messages</h2>
 
         {% for m in messages %}
-            <div class="box message">
+            <div class="box-message">
                 <h3>{{ m.name }}</h3>
                 <small> {{ m.created_at }} </small>
                 <p>{{ m.text }}</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- edit button -->
+                    <input type="hidden" name="edit-id" value="{{edit.id}}">
+                    <button class="edit-btn" type="submit">Edit</button>
+
+                    <!-- delete button -->
+                    <input type="hidden" name="delete-id" value="{{dlt.id}}">
+                    <button class="delete-btn" type="submit">Delete</button>
+                </form>
             </div>
         {% endfor %}
         
