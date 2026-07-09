@@ -35,13 +35,14 @@
         color: black;
         width: 200px;
        }
-       .post-btn{
+       .post-btn,.show-btn{
         color: black;
         height: 30px;
         width: 100px;
         border-radius: 10px;
         border: none;
         cursor: pointer;
+        margin-right: 5px;
        }
        .all-message{
         display: flex;
@@ -49,6 +50,7 @@
         justify-content: space-around;
         align-items: center;
         padding: 50px;
+        visibility: hidden;
        }
        .box-message{
         height: 150px;
@@ -81,13 +83,14 @@
                 {% csrf_token %} 
                 <input type="text" name="name" placeholder="Your Name" required><br>
                 <textarea name="text" placeholder="Write Your Message" required></textarea><br>
-                <button class="post-btn" type="submit">Post Message</button><br>
-
+                <button class="post-btn" type="submit">Post Message</button>
+                <button class="show-btn">Show Message</button><br>
             </form>
 
         </div>
         <br>
         <h2>All Messages</h2>
+        
         <div class="all-message">
         {% for m in messages %}      
             <div class="box-message">
@@ -109,6 +112,19 @@
         {% endfor %}
         </div>
     </body>
+    <script>
+        let showBtn = document.querySelector(".show-btn");
+        let mssg = document.querySelector(".all-message");
+        showBtn.addEventListener("click",()=>{
+             if (mssg.style.visibility === "hidden") {
+                 mssg.style.visibility = "visible";
+                 showBtn.textContent = "Hide Message";
+             } else {
+                 mssg.style.visibility = "hidden";
+                 showBtn.textContent = "Show Message";
+             }
+        });
+    </script>
 
 
 </html>
